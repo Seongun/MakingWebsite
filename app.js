@@ -16,23 +16,9 @@ app.use(express.static(__dirname + '/public'));
 ROUTES
 -----*/
 
-//Main Page Route - NO data
+//Main Page Route - yay
 app.get("/", function(req, res){
-	var dataForThePage = {
-		message: "Try adding a forward slash plus a word to the url",
-		search: false
-	};
-	res.render('index', dataForThePage);
-});
-
-//Main Page Route - WITH data requested via the client
-app.get("/:word", function(req, res){
-	var currentWord = req.params.word;
-	var dataForThePage = {
-		message: currentWord,
-		search: true
-	};
-	res.render('index', dataForThePage);
+	res.render('index');
 });
 
 //Catch All Route
