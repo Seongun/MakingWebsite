@@ -21,6 +21,30 @@ app.get("/", function(req, res){
 	res.render('index');
 });
 
+app.get("/index.html", function(req, res){
+	res.render('index');
+});
+
+app.get("/our_story", function(req, res){
+	res.render('ourstory.html');
+});
+
+app.get("/community", function(req, res){
+	res.render('community.html');
+});
+
+app.get("/resources", function(req, res){
+	res.render('resources.html');
+});
+
+app.get("/events", function(req, res){
+	res.render('events.html');
+});
+
+app.get("/contact", function(req, res){
+	res.render('contact.html');
+});
+
 //Catch All Route
 app.get("*", function(req, res){
 	res.send('Sorry, nothing doing here.');
