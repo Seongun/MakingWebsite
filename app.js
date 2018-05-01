@@ -21,6 +21,10 @@ app.get("/", function(req, res){
 	res.render('index');
 });
 
+app.get("/index.html", function(req, res){
+	res.render('index');
+});
+
 app.get("/our_story", function(req, res){
 	res.render('ourstory.html');
 });
