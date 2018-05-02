@@ -1,5 +1,7 @@
-;(function () {
-	
+
+
+(function () {
+
 	'use strict';
 
 	var isMobile = {
@@ -244,6 +246,10 @@
 
 	};
 
+
+
+
+
 	
 	$(function(){
 		mobileMenuOutsideClick();
@@ -257,6 +263,9 @@
 		parallax();
 		testimonialCarousel();
 	});
+
+
+
 
 
 }());
