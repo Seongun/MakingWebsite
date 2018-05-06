@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "body-parser": "^1.18.2",
-    "ejs": "*",
-    "express": "4.x",
+    "ejs": "^2.5.9",
+    "express": "^4.16.3",
     "request": "^2.85.0"
   }
 }
