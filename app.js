@@ -63,9 +63,24 @@ app.get("/contact", function(req, res){
 	res.render('contact.html');
 });
 
-//Catch All Route
-app.get("*", function(req, res){
-	res.send('Sorry, nothing here.');
+//GET objects from the database
+//Also a JSON Serving route (ALL Data)
+app.get("/contacts/_all", function(req,res){
+	console.log("requested for all files");
+	// Use the Request lib to GET the data in the CouchDB on Cloudant
+	Request.get({
+		url: CLOUDANT_URL + "/_all_docs?include_docs=true",
+		auth: {
+			user: CLOUDANT_KEY,
+			pass: CLOUDANT_PASSWORD
+		},
+		json: true
+	},
+	function (error, response, body){
+		var theRows = body.rows;
+		//Send the data
+		res.json(theRows);
+	});
 });
 
 
@@ -96,6 +111,11 @@ app.post("/savecontact", function (request, response) {
 
 
 
+
+//Catch All Route
+app.get("*", function(req, res){
+	res.send('Sorry, nothing here.');
+});
 
 // Start the server
 app.listen(3000);
