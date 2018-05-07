@@ -1,3 +1,6 @@
+AllPosts = [];
+currentCoutner = 0;
+
 $(document).ready(function(){
 
 	getAllPosts();
@@ -26,7 +29,11 @@ class PostObj{
 		htmlString += '<p>('+this.email+')<p>@'+this.created_at+'<br>';
 		htmlString += '<h5 class = "postSubject">'+this.subject+'<h5>';
 		htmlString += '<h5 class = "postContent">'+this.message+'<h5>';
-		htmlString += '<input class="commentInput"></input><button id=' + this.dataObj._rev + ' class="commentButton">Comment</button>';
+		htmlString += '<form id="comment-us"><input type="text" id="email" class="form-control" placeholder="Your email address">';
+		htmlString += '<input type="hidden" value="'+currentCoutner+'">';
+		htmlString += '<input type="text" id="subject" class="form-control" placeholder="Your Comment">'
+		htmlString += '<input type="submit" id="'+ this.dataObj._rev+'" value="Comment" class="btn btn-primary"></form>';
+		
 		if( this.comments){
 
 			for (var i=0; i<this.comments.length; i++){
@@ -50,7 +57,7 @@ class PostObj{
 }
 
 
-class Comments{
+class Comment{
 
 	constructor(dataObj){
 		this.email = dataObj.email;
@@ -71,6 +78,9 @@ class Comments{
 
 
 function getAllPosts(){
+	AllPosts = [];
+	currentCoutner = 0;
+
 	$.ajax({
 		url: '/contacts/_all',
 		type: 'GET',
@@ -89,8 +99,12 @@ function getAllPosts(){
 				$('#Posts').html('<ul id="theDataList">');
 				//Create Fav Word objects
 				dbData.forEach(function(d){
+					
 					var tempObj = new PostObj(d);
 					tempObj.createDomElement();
+					currentCoutner+=1;
+					AllPosts.append(tempObj);
+
 				});
 				$('#Posts').append('</ul>');
 			}else{
@@ -136,6 +150,34 @@ function saveRecord (theData) {
 		}
 	});
 }
+
+
+$("#comment-us").submit(function () {
+
+
+	//make new comment
+
+	//append the thing to the info.
+
+
+	$.ajax({
+		url: '/update',
+		type: 'POST',
+		contentType: 'application/json',
+		data: JSON.stringify(newContactInfo),
+		error: function(resp){
+			console.log("Oh no...");
+			console.log(resp);
+		},
+		success: function(resp){
+			console.log('Updated!');
+			console.log(resp);
+			getAllData();
+		}
+	});
+	//Return false to prevent the form from submitting itself
+	return false;
+});
 
 $("#contact-us").submit(function () {
 	if( ! ($("#fname").val() && $("#lname").val() && $("#email").val() && $("#subject").val() && $("#message").val() ) ){
