@@ -111,6 +111,33 @@ app.post("/savecontact", function (request, response) {
 
 
 
+//UPDATE an object in the database
+app.post('/update', function(req,res){
+	console.log("Updating an object");
+	var theObj = req.body;
+	//Send the data to the db
+	Request.post({
+		url: CLOUDANT_URL,
+		auth: {
+			user: CLOUDANT_KEY,
+			pass: CLOUDANT_PASSWORD
+		},
+		json: true,
+		body: theObj
+	},
+	function (error, response, body){
+		if (response.statusCode == 201){
+			console.log("Updated!");
+			res.json(body);
+		}
+		else{
+			console.log("Uh oh...");
+			console.log("Error: " + res.statusCode);
+			res.send("Something went wrong...");
+		}
+	});
+});
+
 
 //Catch All Route
 app.get("*", function(req, res){
